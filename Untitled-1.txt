@@ -6,4 +6,21 @@ PLAN for ger-ald-01:
 
 TODO:
     checking for needed worker amount
+
+
+
+COMMANDS:
+    Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, ATTACK, HEAL], 'Worker1', 
+    {memory: {role: 'harvester'}})
+
+
+
+
+ROLES:
+    simple_harvester
+    sationary_harvester
+    carrier
+    upgrader
+    builder
+    militia
     

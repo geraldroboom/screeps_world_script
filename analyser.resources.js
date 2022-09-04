@@ -1,33 +1,25 @@
 var analyserResources = {
 
-    run: function() {
-        /* 
-            multidimensional Array to store all collected Data
-            1 Dimension -> rooms
-            2 Dimension -> types
-            3 Dimension -> the different types 
-            4 Dimension -> data
-                Sources: [ID, free_tiles, distance to spawn
-                Creeps: [role, max_amount]
-        */
+    /** @param {Room} room **/      //?
+    run: function(room) {        
+        // Finding out how many Harvesters each source can support.
+        var sources = room.find(FIND_SOURCES);
+        var counter;
+        var position;
 
-        for(var room in Game.rooms) {
-            var terrain = Game.map.getRoomTerrain(room.name);
-            // TODO: find enemy structures and automate a response
-            // var enemies = room.find(FIND_HOSTILE_CREEPS);
-            // var enemies_structures = room.find(FIND_HOSTILE_STRUCTURES);
+        for(var i=0; i<sources.length; i++) {
+            counter = 0;
+            position = sources[i].pos;
+            if(new RoomPosition(position.x-1, position.y-1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x-1, position.y,   room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x-1, position.y+1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x,   position.y+1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x,   position.y-1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x+1, position.y-1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x+1, position.y,   room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
+            if(new RoomPosition(position.x+1, position.y+1, room.name).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
 
-            var spawn = room.find(FIND_MY_SPAWNS)[0];
-            var sources = room.find(FIND_SOURCES);
-            for(var s in sources) {
-               // s.pos.x;
-               // s.pos.y;
-               // terrain.get(x,y) => TERRAIN_MASK_WALL 
-               var path = room.findPath(s.pos, spawn.pos, {ignoreCreeps: true});
-               // path.lenght;
-            }
-            
-
+            room.memory.sources[sources[i].id] = counter;
         }
     }
 
