@@ -54,8 +54,8 @@ var managerCreepSpawner = {
         */
 
         // Without enough energy the spawning will be delayed
-        if(Game.spawns[this.spawnName].room.energyCapacityAvailable < this.costs[role])
-            return;
+        // if(Game.spawns[this.spawnName].room.energyCapacityAvailable < this.costs[role])
+        //     return;
         
         switch(role) {
             case 'simple_harvester': // COSTS = 250

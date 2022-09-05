@@ -12,7 +12,7 @@ var roleSimpleHarvester = {
             }
         }
         else {
-            // deliver energy to extensions ans spawns
+            // deliver energy to extensions and spawns
             var targets = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
