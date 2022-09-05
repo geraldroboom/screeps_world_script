@@ -12,6 +12,9 @@ var managerCreepSpawner = require('manager.creep_spawner');
 module.exports.loop = function () {
 
     /* Initializing Variables to communicate with the programm. */
+    if (Memory.cmd === undefined)
+        Memory.cmd = {};
+
     if (Memory.cmd.analyser === undefined)
         Memory.cmd.analyser = {};
 
@@ -24,10 +27,13 @@ module.exports.loop = function () {
     if (Memory.cmd.spawner['active'] === undefined) 
         Memory.cmd.spawner['active'] = true;
 
+    if (Memory.cmd.spawner['stationary_active'] === undefined) 
+        Memory.cmd.spawner['stationary_active'] = false;
+
     /* Checking if there is a command to analyze something. */
     if(Memory.cmd.analyser['all']) {
         for(let roomName in Memory.rooms) {
-            analyserResources.run(Game.rooms[roomName]);
+            analyserResources.run(roomName);
         }
 
         Memory.cmd.analyser['all'] = false;
@@ -35,9 +41,9 @@ module.exports.loop = function () {
 
     /* Checking if there is an idle spawn and then wether or not another creep needs to be spawned */
     if(Memory.cmd.spawner['active']) {
-        for(var i in Game.spawns) {
-            if(! (Game.spawns[i].spawning)) {
-                managerCreepSpawner.run(i);
+        for(var s in Game.spawns) {
+            if(!(Game.spawns[s].spawning) && Game.spawns[s].my) {
+                managerCreepSpawner.run(s);
             }
         }
     }

@@ -1,5 +1,3 @@
-
-
 var managerCreepSpawner = {
     spawnName: undefined,
     // "maxStationaryHarvestersPerSource"
@@ -7,11 +5,16 @@ var managerCreepSpawner = {
 
     run: function(spawn) {
         this.spawnName = spawn;
-        if (this.missing_stationary_harvester()) {}
-        else if(this.missing_carriers()) {}
-        else if(this.missing_upgrader()) {}
-        else if(this.missing_builder()) {}
-        else if(this.missing_militia()) {}
+        var b = false;
+
+        if(this.spawnName == undefined) {return;}
+
+        if (Memory.cmd.spawner['stationary_active']) {b = this.missing_stationary_harvester();}
+        if(Memory.cmd.spawner['stationary_active'] && !b) {b = this.missing_carriers();}
+        if(!Memory.cmd.spawner['stationary_active'] && !b) {b = this.missing_simple_harvester();}
+        if(!b) {b = this.missing_upgrader()}
+        if(!b) {b = this.missing_builder()}
+        if(!b) {b = this.missing_militia()}
         
     },
 
@@ -60,10 +63,10 @@ var managerCreepSpawner = {
 
         switch(reValue) {
             case 0:
-                console.log('manager.creep_spawner>>: ' + role + 'with name: ' + creepName + 'at' + spawnName + 'created');
+                console.log('manager.creep_spawner>>: ' + role + ' with name: ' + creepName + ' at ' + this.spawnName + ' created');
                 break;
             case -1:
-                console.log('manager.creep_spawner>>: ERR_NOT_OWNER');
+                console.log('manager.creep_spawner>>: ERR_NOT_OWNER of ' + this.spawnName);
                 break;
             case -3:
                 console.log('manager.creep_spawner>>: ERR_NAME_EXISTS');
@@ -71,10 +74,10 @@ var managerCreepSpawner = {
                 this.spawn(role, specification);
                 break;
             case -4:
-                console.log('manager.creep_spawner>>: ERR_BUSY');
+                console.log('manager.creep_spawner>>: ERR_BUSY ' + this.spawnName);
                 break;
             case -6:
-                console.log('manager.creep_spawner>>: ERR_NOT_ENOUGH_ENERGY');
+                console.log('manager.creep_spawner>>: ERR_NOT_ENOUGH_ENERGY in ' + this.spawnName + ' for ' + role);
                 break;
             case -10:
                 console.log('manager.creep_spawner>>: ERR_INVALID_ARGS');
@@ -89,7 +92,7 @@ var managerCreepSpawner = {
     },
 
     missing_stationary_harvester: function() {
-        var data = Game.spawns[this.spawnName].memory.sources;
+        var data = Game.spawns[this.spawnName].room.memory.sources;
 
         for(var i in data) {
             // Game.getObjectById(data[i]);
@@ -111,7 +114,7 @@ var managerCreepSpawner = {
     },
 
     missing_carriers: function() {
-        var data = Game.spawns[this.spawnName].memory.sources;
+        var data = Game.spawns[this.spawnName].room.memory.sources;
         var creepName = 'Carrier';
         var counter = 0;
 
@@ -139,11 +142,11 @@ var managerCreepSpawner = {
     },
 
     missing_upgrader: function() {
-        if (Memory.rooms.spawnName.maxCreeps === undefined)
-            Memory.rooms.spawnName.maxCreeps = {};
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
+            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
         
-        if (Memory.rooms.spawnName.maxCreeps['upgrader'] === undefined) 
-            Memory.rooms.spawnName.maxCreeps['upgrader'] = 0;
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader'] === undefined) 
+            Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader'] = 0;
 
         var upgraders = [];
         for(var i in Game.creeps) {
@@ -151,7 +154,7 @@ var managerCreepSpawner = {
                 upgraders.push(Game.creeps[i]);
             }
         }
-        if(upgraders.length < Memory.rooms.spawnName.maxCreeps['upgrader']) {
+        if(upgraders.length < Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader']) {
             this.spawn('upgrader', undefined);
             return true;
         }
@@ -161,11 +164,11 @@ var managerCreepSpawner = {
     },
 
     missing_simple_harvester: function() {
-        if (Memory.rooms.spawnName.maxCreeps === undefined)
-            Memory.rooms.spawnName.maxCreeps = {};
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
+            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
         
-        if (Memory.rooms.spawnName.maxCreeps['simple_harvester'] === undefined) 
-            Memory.rooms.spawnName.maxCreeps['simple_harvester'] = 0;
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps['simple_harvester'] === undefined) 
+            Game.spawns[this.spawnName].room.memory.maxCreeps['simple_harvester'] = 2;
 
         var simple_harvesters = [];
         for(var i in Game.creeps) {
@@ -173,7 +176,7 @@ var managerCreepSpawner = {
                 simple_harvesters.push(Game.creeps[i]);
             }
         }
-        if(simple_harvesters.length < Memory.rooms.spawnName.maxCreeps['simple_harvester']) {
+        if(simple_harvesters.length < Game.spawns[this.spawnName].room.memory.maxCreeps['simple_harvester']) {
             this.spawn('simple_harvester', undefined);
             return true;
         }
@@ -183,11 +186,11 @@ var managerCreepSpawner = {
     },
 
     missing_builder: function() {
-        if (Memory.rooms.spawnName.maxCreeps === undefined)
-            Memory.rooms.spawnName.maxCreeps = {};
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
+            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
         
-        if (Memory.rooms.spawnName.maxCreeps['builder'] === undefined) 
-            Memory.rooms.spawnName.maxCreeps['builder'] = 0;
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps['builder'] === undefined) 
+            Game.spawns[this.spawnName].room.memory.maxCreeps['builder'] = 1;
 
         var upgraders = [];
         for(var i in Game.creeps) {
@@ -195,7 +198,7 @@ var managerCreepSpawner = {
                 upgraders.push(Game.creeps[i]);
             }
         }
-        if(upgraders.length < Memory.rooms.spawnName.maxCreeps['builder']) {
+        if(upgraders.length < Game.spawns[this.spawnName].room.memory.maxCreeps['builder']) {
             this.spawn('builder', undefined);
             return true;
         }
@@ -205,11 +208,11 @@ var managerCreepSpawner = {
     },
 
     missing_militia: function() {
-        if (Memory.rooms.spawnName.maxCreeps === undefined)
-            Memory.rooms.spawnName.maxCreeps = {};
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
+            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
         
-        if (Memory.rooms.spawnName.maxCreeps['militia'] === undefined) 
-            Memory.rooms.spawnName.maxCreeps['militia'] = 0;
+        if (Game.spawns[this.spawnName].room.memory.maxCreeps['militia'] === undefined) 
+            Game.spawns[this.spawnName].room.memory.maxCreeps['militia'] = 0;
 
         var militias = [];
         for(var i in Game.creeps) {
@@ -217,7 +220,7 @@ var managerCreepSpawner = {
                 militias.push(Game.creeps[i]);
             }
         }
-        if(militias.length < Memory.rooms.spawnName.maxCreeps['militia']) {
+        if(militias.length < Game.spawns[this.spawnName].room.memory.maxCreeps['militia']) {
             this.spawn('militia', undefined);
             return true;
         }
