@@ -16,19 +16,22 @@ var roleUpgrader = {
             }
         }
         else {
-            // Find energy on the ground
-            const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {
-                filter: resource => resource.resourceType == RESOURCE_ENERGY
-            })
+            // find all containers and spawns with energy in them
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_SPAWN) &&
+                        structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;
+                }
+            });
 
             // Find the closest energy on the ground
-            const closestDroppedEnergy = creep.pos.findClosestByRange(droppedEnergy)
+            const closest = creep.pos.findClosestByRange(targets);
 
             // Try to pickup the energy. If it's not in range
-            if (creep.pickup(closestDroppedEnergy) == ERR_NOT_IN_RANGE) {
+            if (creep.pickup(closest) == ERR_NOT_IN_RANGE) {
 
                 // Move to it
-                creep.moveTo(closestDroppedEnergy, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.moveTo(closest);
             }
         }
 	}

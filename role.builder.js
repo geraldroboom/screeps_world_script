@@ -19,9 +19,22 @@ var roleBuilder = {
             }
 	    }
 	    else {
-	        var s = Game.spawns['Spawn1'];
-            if(creep.withdraw(s, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(s);
+	        // find all containers and spawns with energy in them
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_SPAWN) &&
+                        structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;
+                }
+            });
+
+            // Find the closest energy on the ground
+            const closest = creep.pos.findClosestByRange(targets);
+
+            // Try to pickup the energy. If it's not in range
+            if (creep.pickup(closest) == ERR_NOT_IN_RANGE) {
+
+                // Move to it
+                creep.moveTo(closest);
             }
 	    }
 	}
