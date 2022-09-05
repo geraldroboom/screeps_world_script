@@ -1,17 +1,12 @@
-PLAN for ger-ald-01:
-    automate the amount of workers, builders and upgraders depending on the situation in the room
-    have the maximum economy with simple three part creeps
-    building will NOT be automated
-    only builders, harvesters and upgraders are included
-
 TODO:
     checking for needed worker amount
+
+    Spawning creeps -> schaut sich Creeps in allen Räumen an wenn eigentlich nur für den Raum die Creeps gezählt werden sollen.
 
 
 
 COMMANDS:
-    Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE, ATTACK, HEAL], 'Worker1', 
-    {memory: {role: 'harvester'}})
+    In Memory.cmd.XXX there are bool variables who determin if certain cpu heavy functions schould be executed.
 
 
 
