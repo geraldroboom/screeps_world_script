@@ -16,9 +16,19 @@ var roleUpgrader = {
             }
         }
         else {
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+            // Find energy on the ground
+            const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {
+                filter: resource => resource.resourceType == RESOURCE_ENERGY
+            })
+
+            // Find the closest energy on the ground
+            const closestDroppedEnergy = creep.pos.findClosestByRange(droppedEnergy)
+
+            // Try to pickup the energy. If it's not in range
+            if (creep.pickup(closestDroppedEnergy) == ERR_NOT_IN_RANGE) {
+
+                // Move to it
+                creep.moveTo(closestDroppedEnergy, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
         }
 	}
