@@ -21,7 +21,7 @@ var roleBuilder = {
             }
             else {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                    return structure.hits < (structure.hitsMax*0.75);}});
+                    return structure.hits < (structure.hitsMax*0.75) && structure.structureType != STRUCTURE_WALL;}});
 
                 if(targets.length) {
                     closest = creep.pos.findClosestByRange(targets);
