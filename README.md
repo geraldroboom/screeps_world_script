@@ -1,12 +1,11 @@
 # Screeps World Script by Gerald
 ### (work in progress)
-Spawning creeps -> schaut sich Creeps in allen Räumen an wenn eigentlich nur für den Raum die Creeps gezählt werden sollen.
-
 
 
 ## COMMANDS:
 
-In Memory.cmd.XXX there are bool variables who determin if certain cpu heavy functions schould be executed.
+In Memory.cmd.XXX there are bool variables who determin if certain cpu heavy functions, advanced features or optional features schould be executed.
+In Memory.rooms.XXX.maxCreeps the number of certain roles in a room can be managed. How many Builders and Upgraders can be supported has to be decided by the player.
 
 
 
