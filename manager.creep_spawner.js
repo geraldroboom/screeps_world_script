@@ -113,6 +113,17 @@ var managerCreepSpawner = {
                 console.log('manager.creep_spawner>>: role doesn_t exist');
                 break;
         }
+
+        // Manages that when a harvester should be constructed that then a bool is switched and no builder nor upgrader can take energy from a spawn
+        if(reValue == -6 && role.match('harvester')) {
+            if (Game.spawns[this.spawnName].room.memory.cmd === undefined)
+                Game.spawns[this.spawnName].room.memory.cmd = {};
+        
+            if (Game.spawns[this.spawnName].room.memory.cmd['spawningPriority'] === undefined) 
+                Game.spawns[this.spawnName].room.memory.cmd['spawningPriority'] = false;
+            
+            Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
+        }
     },
 
     missing_stationary_harvester: function() {
@@ -188,7 +199,7 @@ var managerCreepSpawner = {
             /* Creating Array with all simple Harvester Creeps for a Source to check if there are enough */
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'simple_harvester' && c.memory.target == sourceID;}});
 
-            if(creeps.length < sources[sourceID] && creeps.length < this.maxSHpS) {
+            if(creeps.length < (sources[sourceID]) && creeps.length < this.maxSHpS) {
                 this.spawn('simple_harvester', sourceID);
                 return true;
             }

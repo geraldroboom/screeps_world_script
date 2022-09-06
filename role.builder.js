@@ -41,7 +41,7 @@ var roleBuilder = {
             }
             if(targets.length == 0) {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                    return structure.structureType == STRUCTURE_SPAWN && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
+                    return structure.structureType == STRUCTURE_SPAWN && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0 && !creep.room.memory.cmd.spawningPriority;}});
             }
 
             var target = creep.pos.findClosestByRange(targets)
