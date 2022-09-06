@@ -15,7 +15,7 @@ var managerMemory = {
         Memory.cmd = {};
 
         Memory.cmd.analyser = {};
-        Memory.cmd.analyser['all'] = true;
+        Memory.cmd.analyser['all'] = false;
         Memory.cmd.analyser['rooms'] = [];
         Memory.cmd.analyser['rooms'].push(Game.spawns['Spawn1'].room.name);
         
