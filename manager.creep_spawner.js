@@ -112,10 +112,10 @@ var managerCreepSpawner = {
         }
 
         // Preventing Economic cathastrophe due to no energy in spawn and no harvesters
-        if(reValue == -6 && (role.match('harvester') || role.math('dedicated_carrier'))) {            
+        if(reValue == -6 && (role.match('harvester') || role.match('dedicated_carrier'))) {            
             Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
         }
-        else if (reValue == 0 && (role.match('harvester') || role.math('dedicated_carrier'))) {
+        else if (reValue == 0 && (role.match('harvester') || role.match('dedicated_carrier'))) {
             Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = false;
         }
     },
