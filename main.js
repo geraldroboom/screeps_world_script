@@ -12,7 +12,7 @@ var managerCreepSpawner = require('manager.creep_spawner');
 var managerMemory = require('manager.memory');
 
 module.exports.loop = function () {
-/*    // When executed the first time run memory manager
+    // When executed the first time run memory manager
     if(Memory.cmd == undefined) {
         managerMemory.run('all');
     }
@@ -25,7 +25,7 @@ module.exports.loop = function () {
     // analyser_rooms queue
     if(Memory.cmd.analyser['rooms'].length) {
         analyserResources.run(Memory.cmd.analyser['rooms'].pop());
-    } */
+    } 
 
     /* Checking if there is an idle spawn and then wether or not another creep needs to be spawned */
     if(Memory.cmd.spawner['active']) {
