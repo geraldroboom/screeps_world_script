@@ -28,7 +28,7 @@ var roleUpgrader = {
             const closest = creep.pos.findClosestByRange(targets);
 
             // Try to pickup the energy. If it's not in range
-            if (creep.transfer(closest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if (creep.withdraw(closest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 
                 // Move to it
                 creep.moveTo(closest);
