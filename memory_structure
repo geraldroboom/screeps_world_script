@@ -1,0 +1,28 @@
+const { intersection, toInteger } = require("lodash");
+
+Memory:
+    start_mem: false
+    cmd:
+        analyser:
+            all: false
+        spawner:
+            active: true
+            stationary_active: false
+    rooms:
+        roomName1:
+            maxCreeps:
+                carrier: 0
+                upgrader: 1
+                builder: 1
+                militia: 0
+            sources:
+                sourceID1: 3
+                sourceID2: 2
+            cmd:
+                spawningPriority: false
+    nameIndex:
+        role1
+        role2
+    creeps:
+        creep1
+        creep2

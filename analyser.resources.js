@@ -18,9 +18,6 @@ var analyserResources = {
             if(new RoomPosition(position.x+1, position.y,   roomName).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
             if(new RoomPosition(position.x+1, position.y+1, roomName).lookFor(LOOK_TERRAIN) != 'wall') {counter++;}
 
-            if (Game.rooms[roomName].memory.sources === undefined)
-                Game.rooms[roomName].memory.sources = {};
-
             Game.rooms[roomName].memory.sources[sources[i].id] = counter;
         }
     }

@@ -22,9 +22,6 @@ var managerCreepSpawner = {
     },
 
     getName: function(role) {
-        if (Memory.nameIndex === undefined)
-            Memory.nameIndex = {};
-
         if (Memory.nameIndex[role] === undefined) 
             Memory.nameIndex[role] = 0;
 
@@ -62,7 +59,7 @@ var managerCreepSpawner = {
             case 'simple_harvester': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
                 break;
-            case 'sationary_harvester': // COSTS = 300
+            case 'sationary_harvester': // COSTS = 350
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
             case 'dedicated_carrier': // COSTS = 350
@@ -114,17 +111,11 @@ var managerCreepSpawner = {
                 break;
         }
 
-        // Manages that when a harvester should be constructed that then a bool is switched and no builder nor upgrader can take energy from a spawn
-        if(reValue == -6 && role.match('harvester')) {
-            if (Game.spawns[this.spawnName].room.memory.cmd === undefined)
-                Game.spawns[this.spawnName].room.memory.cmd = {};
-        
-            if (Game.spawns[this.spawnName].room.memory.cmd['spawningPriority'] === undefined) 
-                Game.spawns[this.spawnName].room.memory.cmd['spawningPriority'] = false;
-            
+        // Preventing Economic cathastrophe due to no energy in spawn and no harvesters
+        if(reValue == -6 && (role.match('harvester') || role.math('dedicated_carrier'))) {            
             Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
         }
-        else if (reValue == 0 && role.match('harvester')) {
+        else if (reValue == 0 && (role.match('harvester') || role.math('dedicated_carrier'))) {
             Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = false;
         }
     },
@@ -162,12 +153,6 @@ var managerCreepSpawner = {
     },
 
     missing_carriers: function() {
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
-            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
-        
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps['carrier'] === undefined) 
-            Game.spawns[this.spawnName].room.memory.maxCreeps['carrier'] = 0;
-
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'carrier';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['carrier']) {
@@ -178,12 +163,6 @@ var managerCreepSpawner = {
     },
 
     missing_upgrader: function() {
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
-            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
-        
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader'] === undefined) 
-            Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader'] = 1;
-
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'upgrader';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader']) {
@@ -211,12 +190,6 @@ var managerCreepSpawner = {
     },
 
     missing_builder: function() {
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
-            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
-        
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps['builder'] === undefined) 
-            Game.spawns[this.spawnName].room.memory.maxCreeps['builder'] = 1;
-
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'builder';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['builder']) {
@@ -229,12 +202,6 @@ var managerCreepSpawner = {
     },
 
     missing_militia: function() {
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps === undefined)
-            Game.spawns[this.spawnName].room.memory.maxCreeps = {};
-        
-        if (Game.spawns[this.spawnName].room.memory.maxCreeps['militia'] === undefined) 
-            Game.spawns[this.spawnName].room.memory.maxCreeps['militia'] = 0;
-
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'militia';}});
             
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['militia']) {
