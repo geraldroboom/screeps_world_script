@@ -12,30 +12,30 @@ var roleBuilder = {
 
 	    if(creep.memory.building) {
 	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+            const closest = creep.pos.findClosestByRange(targets);
             if(targets.length) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    const closest = creep.pos.findClosestByRange(targets);
+                if(creep.build(closest) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(closest, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }
 	    }
 	    else {
-	        // find all containers and spawns with energy in them
-            var targets = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return (/*structure.structureType == STRUCTURE_CONTAINER ||*/ structure.structureType == STRUCTURE_SPAWN) &&
-                        (structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0);
-                }
-            });
+	        // find all containers and spawns with energy in them, containers are prioretized
+            var targets = [];
 
-            // Find the closest energy on the ground
-            const closest = creep.pos.findClosestByRange(targets);
+            if(targets.length == 0) {
+                targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
+                    return structure.structureType == STRUCTURE_CONTAINER && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
+            }
+            if(targets.length == 0) {
+                targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
+                    return structure.structureType == STRUCTURE_SPAWN && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
+            }
 
-            // Try to pickup the energy. If it's not in range
-            if (creep.withdraw(closest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-
-                // Move to it
-                creep.moveTo(closest);
+            var target = creep.pos.findClosestByRange(targets)
+            
+            if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
             }
 	    }
 	}
