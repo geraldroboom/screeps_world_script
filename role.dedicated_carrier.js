@@ -17,7 +17,7 @@ var roleDedicatedCarrier = {
 
             }
             // else move to the designated target
-            else {
+            else if(Game.getObjectById(creep.memory['target']).pos.getRangeTo(creep.pos) > 1){
                 creep.moveTo(Game.getObjectById(creep.memory['target']));
             }
 
