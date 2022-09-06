@@ -7,7 +7,7 @@ var roleStationaryHarvester = {
  
             // Move to it
  
-            creep.moveTo(Game.getObjectById(creep.memory['target']));
+            creep.moveTo(Game.getObjectById(creep.memory['target']), { visualizePathStyle: { stroke: '#ffffff' } });
         }
     }
 };

@@ -17,7 +17,7 @@ var roleCarrier = {
             if (creep.pickup(closestDroppedEnergy) == ERR_NOT_IN_RANGE) {
 
                 // Move to it
-                creep.moveTo(closestDroppedEnergy, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.moveTo(closestDroppedEnergy);
             }
         } else {
             // deliver energy to extensions and spawns

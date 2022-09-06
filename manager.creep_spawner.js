@@ -2,7 +2,7 @@ var managerCreepSpawner = {
     spawnName: undefined,
     // "maxStationaryHarvestersPerSource"
     maxSHpS: 4,
-    costs: {'simple_harvester': 250, 'sationary_harvester': 300, 'carrier': 200, 'upgrader': 250, 'builder': 250, 'militia': 260},
+    costs: {'simple_harvester': 300, 'sationary_harvester': 350, 'carrier': 300, 'upgrader': 300, 'builder': 300, 'militia': 260},
 
     run: function(spawn) {
         this.spawnName = spawn;
@@ -58,20 +58,20 @@ var managerCreepSpawner = {
         //     return;
         
         switch(role) {
-            case 'simple_harvester': // COSTS = 250
-                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
+            case 'simple_harvester': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
                 break;
-            case 'sationary_harvester': // COSTS = 300
-                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, MOVE, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
+            case 'sationary_harvester': // COSTS = 350
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
-            case 'carrier': // COSTS = 200
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
+            case 'carrier': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
                 break;
-            case 'upgrader': // COSTS = 250
-                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
+            case 'upgrader': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
                 break;
-            case 'builder': // COSTS = 250
-                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE], creepName, {memory: {role: 'builder'}});
+            case 'builder': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'builder'}});
                 break;
             case 'militia': // COSTS = 260
                 reValue = Game.spawns[this.spawnName].spawnCreep([ATTACK, ATTACK, MOVE, MOVE], creepName, {memory: {role: 'militia', designatedRoom: specification}});
@@ -115,17 +115,15 @@ var managerCreepSpawner = {
         var data = Game.spawns[this.spawnName].room.memory.sources;
 
         for(var i in data) {
-            // Game.getObjectById(data[i]);
-            // Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {})
             
             /* Creating Array with all stationary Harvester Creeps for a Source to check if there are enough */
             var harvesters = [];
-            for(var i in Game.creeps) {
-                if(Game.creeps[i].memory.role == 'sationary_harvester' && Game.creeps[i].memory.target == i) {
-                    harvesters.push(Game.creeps[i]);
+            for(var c in Game.creeps) {
+                if(Game.creeps[c].memory.role == 'sationary_harvester' && Game.creeps[c].memory.target == i) {
+                    harvesters.push(Game.creeps[c]);
                 }
             }
-            if(harvesters.length <= data[i] && harvesters.length <= this.maxSHpS) {
+            if(harvesters.length < data[i] && harvesters.length < this.maxSHpS) {
                 this.spawn('sationary_harvester', i);
                 return true;
             }

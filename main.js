@@ -54,7 +54,7 @@ module.exports.loop = function () {
         if(creep.memory.role == 'simple_harvester') {
             roleSimpleHarvester.run(creep);
         }
-        if(creep.memory.role == 'stationary_harvester') {
+        if(creep.memory.role == 'sationary_harvester') {
             roleStationaryHarvester.run(creep);
         }
         if(creep.memory.role == 'carrier') {
