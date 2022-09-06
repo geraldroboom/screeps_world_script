@@ -1,4 +1,5 @@
 # Screeps World Script by Gerald
+### (work in progress)
 Spawning creeps -> schaut sich Creeps in allen Räumen an wenn eigentlich nur für den Raum die Creeps gezählt werden sollen.
 
 
