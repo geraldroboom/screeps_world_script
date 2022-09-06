@@ -4,7 +4,7 @@ var roleDedicatedCarrier = {
     run: function(creep) {
         // If the hauler isn't full
         if (creep.store.getFreeCapacity() > 0) {
-            const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (resources) => {
+            const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (resource) => {
                 return resource.resourceType == RESOURCE_ENERGY && resource.pos.inRangeTo(creep.pos, 3);}});
             
             // If there is dropped Energy in a 3 tile radius, move to pick it up.
