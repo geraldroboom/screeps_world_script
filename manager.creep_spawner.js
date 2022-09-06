@@ -63,7 +63,7 @@ var managerCreepSpawner = {
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
             case 'dedicated_carrier': // COSTS = 350
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
                 break;   
             case 'carrier': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
