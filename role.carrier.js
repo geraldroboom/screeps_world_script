@@ -8,10 +8,10 @@ var roleCarrier = {
             // Find energy on the ground
             const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {
                 filter: resource => resource.resourceType == RESOURCE_ENERGY
-            })
+            });
 
             // Find the closest energy on the ground
-            const closestDroppedEnergy = creep.pos.findClosestByRange(droppedEnergy)
+            const closestDroppedEnergy = creep.pos.findClosestByRange(droppedEnergy);
 
             // Try to pickup the energy. If it's not in range
             if (creep.pickup(closestDroppedEnergy) == ERR_NOT_IN_RANGE) {

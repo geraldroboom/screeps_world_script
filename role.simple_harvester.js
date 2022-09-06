@@ -3,12 +3,9 @@ var roleSimpleHarvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
 	    if(creep.store.getFreeCapacity() > 0) {
-            // find and harvest energy from sources
-            var sources = creep.room.find(FIND_SOURCES);
-            const closest = creep.pos.findClosestByRange(sources);
-
-            if(creep.harvest(closest) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(closest);
+            // find and harvest energy from dedicated sources
+            if (creep.harvest(Game.getObjectById(creep.memory['target'])) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.getObjectById(creep.memory['target']), { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
         else {
