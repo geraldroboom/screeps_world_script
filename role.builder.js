@@ -12,10 +12,22 @@ var roleBuilder = {
 
 	    if(creep.memory.building) {
 	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            const closest = creep.pos.findClosestByRange(targets);
+            var closest;
             if(targets.length) {
+                closest = creep.pos.findClosestByRange(targets);
                 if(creep.build(closest) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(closest, {visualizePathStyle: {stroke: '#ffffff'}});
+                }
+            }
+            else {
+                targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
+                    return structure.hits < (structure.hitsMax*0.75);}});
+
+                if(targets.length) {
+                    closest = creep.pos.findClosestByRange(targets);
+                    if(creep.repair(closest) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(closest, {visualizePathStyle: {stroke: '#ffffff'}});
+                    }
                 }
             }
 	    }

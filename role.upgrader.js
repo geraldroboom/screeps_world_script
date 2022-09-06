@@ -21,11 +21,11 @@ var roleUpgrader = {
 
             if(targets.length == 0) {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                    return structure.structureType == STRUCTURE_CONTAINER && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
+                    return structure.structureType == STRUCTURE_CONTAINER && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
             }
             if(targets.length == 0) {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                    return structure.structureType == STRUCTURE_SPAWN && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
+                    return structure.structureType == STRUCTURE_SPAWN && structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0;}});
             }
 
             var target = creep.pos.findClosestByRange(targets)

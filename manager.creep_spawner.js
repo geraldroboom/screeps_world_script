@@ -65,7 +65,7 @@ var managerCreepSpawner = {
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
             case 'carrier': // COSTS = 300
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier', target: specification}});
                 break;
             case 'upgrader': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
@@ -117,13 +117,9 @@ var managerCreepSpawner = {
         for(var i in data) {
             
             /* Creating Array with all stationary Harvester Creeps for a Source to check if there are enough */
-            var harvesters = [];
-            for(var c in Game.creeps) {
-                if(Game.creeps[c].memory.role == 'sationary_harvester' && Game.creeps[c].memory.target == i) {
-                    harvesters.push(Game.creeps[c]);
-                }
-            }
-            if(harvesters.length < data[i] && harvesters.length < this.maxSHpS) {
+            var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'sationary_harvester' && c.memory.target == i;}})
+
+            if(creeps.length < data[i] && creeps.length < this.maxSHpS) {
                 this.spawn('sationary_harvester', i);
                 return true;
             }
@@ -239,7 +235,7 @@ var managerCreepSpawner = {
             }
         }
         if(militias.length < Game.spawns[this.spawnName].room.memory.maxCreeps['militia']) {
-            this.spawn('militia', undefined);
+            this.spawn('militia', Game.spawns[this.spawnName].room.name);
             return true;
         }
 
