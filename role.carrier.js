@@ -20,18 +20,17 @@ var roleCarrier = {
                 creep.moveTo(closestDroppedEnergy, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
         } else {
-
-            // Find spawns in the room
-            const spawns = creep.room.find(FIND_MY_SPAWNS)
-
-            // Find the closest spawn
-            const closestSpawn = creep.pos.findClosestByRange(spawns)
-
-            // Try to transfer energy to the spawn. If it's not in range
-            if (creep.transfer(closestSpawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-
-                // Move to it
-                creep.moveTo(closestSpawn, { visualizePathStyle: { stroke: '#ffaa00' } });
+            // deliver energy to extensions and spawns
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_CONTAINER || structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
+                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+                }
+            });
+            if(targets.length > 0) {
+                if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(targets[0]);
+                }
             }
         }
     }
