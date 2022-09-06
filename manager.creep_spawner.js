@@ -1,8 +1,7 @@
 var managerCreepSpawner = {
     spawnName: undefined,
-    // "maxStationaryHarvestersPerSource"
-    maxSHpS: 4,
-    // costs: {'simple_harvester': 300, 'sationary_harvester': 350, 'carrier': 300, 'upgrader': 300, 'builder': 300, 'militia': 260},
+    // "max Dedicated Carriers Per Source"
+    maxDCpS: 4,
 
     run: function(spawn) {
         this.spawnName = spawn;
@@ -50,16 +49,12 @@ var managerCreepSpawner = {
         TOUGH = 10
         
         */
-
-        // Without enough energy the spawning will be delayed
-        // if(Game.spawns[this.spawnName].room.energyCapacityAvailable < this.costs[role])
-        //     return;
         
         switch(role) {
             case 'simple_harvester': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
                 break;
-            case 'sationary_harvester': // COSTS = 350
+            case 'sationary_harvester': // COSTS = 550
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
             case 'dedicated_carrier': // COSTS = 350
@@ -144,7 +139,7 @@ var managerCreepSpawner = {
             /* Creating Array with all stationary Harvester Creeps for a Source to check if there are enough */
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'dedicated_carrier' && c.memory.target == sourceID;}});
 
-            if(creeps.length < this.maxSHpS) {
+            if(creeps.length < this.maxDCpS) {
                 this.spawn('dedicated_carrier', sourceID);
                 return true;
             }
