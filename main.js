@@ -1,5 +1,6 @@
 var roleSimpleHarvester = require('role.simple_harvester');
 var roleStationaryHarvester = require('role.stationary_harvester');
+var roleDedicatedCarrier = require('role.dedicated_carrier');
 var roleCarrier = require('role.carrier');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -25,7 +26,7 @@ module.exports.loop = function () {
         Memory.cmd.analyser['all'] = true;
 
     if (Memory.cmd.spawner['active'] === undefined) 
-        Memory.cmd.spawner['active'] = true;
+        Memory.cmd.spawner['active'] = false;
 
     if (Memory.cmd.spawner['stationary_active'] === undefined) 
         Memory.cmd.spawner['stationary_active'] = false;
@@ -56,6 +57,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'sationary_harvester') {
             roleStationaryHarvester.run(creep);
+        }
+        if(creep.memory.role == 'dedicated_carrier') {
+            roleDedicatedCarrier.run(creep);
         }
         if(creep.memory.role == 'carrier') {
             roleCarrier.run(creep);
