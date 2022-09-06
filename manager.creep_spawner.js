@@ -60,7 +60,7 @@ var managerCreepSpawner = {
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
                 break;
             case 'sationary_harvester': // COSTS = 350
-                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
             case 'dedicated_carrier': // COSTS = 350
                 reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
@@ -128,7 +128,7 @@ var managerCreepSpawner = {
             /* Creating Array with all stationary Harvester Creeps for a Source to check if there are enough */
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'sationary_harvester' && c.memory.target == sourceID;}});
 
-            if(creeps.length < sources[sourceID] && creeps.length < this.maxSHpS) {
+            if(creeps.length < 1) {
                 this.spawn('sationary_harvester', sourceID);
                 return true;
             }
@@ -144,7 +144,7 @@ var managerCreepSpawner = {
             /* Creating Array with all stationary Harvester Creeps for a Source to check if there are enough */
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'dedicated_carrier' && c.memory.target == sourceID;}});
 
-            if(creeps.length < sources[sourceID] && creeps.length < this.maxSHpS) {
+            if(creeps.length < this.maxSHpS) {
                 this.spawn('dedicated_carrier', sourceID);
                 return true;
             }
@@ -181,7 +181,7 @@ var managerCreepSpawner = {
             /* Creating Array with all simple Harvester Creeps for a Source to check if there are enough */
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'simple_harvester' && c.memory.target == sourceID;}});
 
-            if(creeps.length < (sources[sourceID]) && creeps.length < this.maxSHpS) {
+            if(creeps.length < (sources[sourceID])) {
                 this.spawn('simple_harvester', sourceID);
                 return true;
             }
