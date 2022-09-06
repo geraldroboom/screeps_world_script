@@ -124,6 +124,9 @@ var managerCreepSpawner = {
             
             Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
         }
+        else if (reValue == 0 && role.match('harvester')) {
+            Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = false;
+        }
     },
 
     missing_stationary_harvester: function() {
