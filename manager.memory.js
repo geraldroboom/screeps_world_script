@@ -36,7 +36,7 @@ var managerMemory = {
 
     // needs to run whenever a new room is colonized
     init_mem_room: function(roomName) {
-        Memory.rooms.roomName = {};
+        Memory.rooms[roomName] = {};
 
         Memory.rooms[roomName].maxCreeps = {}
         Memory.rooms[roomName].maxCreeps['carrier'] = 0;

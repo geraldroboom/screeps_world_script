@@ -19,12 +19,12 @@ module.exports.loop = function () {
 
     // mem_manager_rooms queue
     if(Memory.cmd.mem_manager['rooms'].length) {
-        managerMemory.run(Memory.cmd.mem_manager['rooms'].length.pop());
+        managerMemory.run(Memory.cmd.mem_manager['rooms'].pop());
     }
 
     // analyser_rooms queue
     if(Memory.cmd.analyser['rooms'].length) {
-        managerMemory.run(Memory.cmd.mem_manager['rooms'].length.pop());
+        managerMemory.run(Memory.cmd.mem_manager['rooms'].pop());
     }
 
     /* Checking if there is an idle spawn and then wether or not another creep needs to be spawned */
