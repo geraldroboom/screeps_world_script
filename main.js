@@ -24,7 +24,7 @@ module.exports.loop = function () {
 
     // analyser_rooms queue
     if(Memory.cmd.analyser['rooms'].length) {
-        managerMemory.run(Memory.cmd.analyser['rooms'].pop());
+        analyserResources.run(Memory.cmd.analyser['rooms'].pop());
     }
 
     /* Checking if there is an idle spawn and then wether or not another creep needs to be spawned */

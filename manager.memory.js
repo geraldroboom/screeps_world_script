@@ -49,6 +49,7 @@ var managerMemory = {
 
         Memory.rooms[roomName].sources = {};
         Memory.cmd.analyser['rooms'].push(roomName);
+
     }
 
 };
