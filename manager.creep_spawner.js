@@ -134,7 +134,7 @@ var managerCreepSpawner = {
                 break;
             case -3:
                 console.log('manager.creep_spawner>>: ERR_NAME_EXISTS');
-                this.commitName(role);
+                this.commitName(role.slice(0, -1));
                 this.spawn(role, specification);
                 break;
             case -4:
