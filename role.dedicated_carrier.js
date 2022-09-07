@@ -11,7 +11,7 @@ var roleDedicatedCarrier = {
 	    }
 
         // If the hauler isn't full
-        if (creep.memory.delivering) {
+        if (!creep.memory.delivering) {
             const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (resource) => {
                 return resource.resourceType == RESOURCE_ENERGY && resource.pos.inRangeTo(creep.pos, 3);}});
             
