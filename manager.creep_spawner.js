@@ -127,6 +127,7 @@ var managerCreepSpawner = {
 
         switch(reValue) {
             case 0:
+                Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = false;
                 console.log('manager.creep_spawner>>: ' + role + ' with name: ' + creepName + ' at ' + this.spawnName + ' created');
                 break;
             case -1:
@@ -141,6 +142,7 @@ var managerCreepSpawner = {
                 console.log('manager.creep_spawner>>: ERR_BUSY ' + this.spawnName);
                 break;
             case -6:
+                Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
                 console.log('manager.creep_spawner>>: ERR_NOT_ENOUGH_ENERGY in ' + this.spawnName + ' for ' + role);
                 break;
             case -10:
@@ -152,14 +154,6 @@ var managerCreepSpawner = {
             default:
                 console.log('manager.creep_spawner>>: role doesn_t exist');
                 break;
-        }
-
-        // Preventing Economic cathastrophe due to no energy in spawn and no harvesters
-        if(reValue == -6 && (role.match('harvester') || role.match('dedicated_carrier'))) {            
-            Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = true;
-        }
-        else if (reValue == 0 && (role.match('harvester') || role.match('dedicated_carrier'))) {
-            Game.spawns[this.spawnName].room.memory.cmd.spawningPriority = false;
         }
     },
 
