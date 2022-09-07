@@ -1,7 +1,7 @@
 var managerCreepSpawner = {
     spawnName: undefined,
     // "max Dedicated Carriers Per Source"
-    maxDCpS: 4,
+    maxDCpS: 3,
 
     run: function(spawn) {
         this.spawnName = spawn;
