@@ -21,7 +21,7 @@ var managerMemory = {
         
         Memory.cmd.spawner = {};
         Memory.cmd.spawner['active'] = false;
-        Memory.cmd.spawner['stationary_active'] = false;
+        Memory.cmd.spawner['tier'] = 0;
 
         Memory.cmd.mem_manager = {};
         Memory.cmd.mem_manager['rooms'] = [];

@@ -5,19 +5,37 @@ var managerCreepSpawner = {
 
     run: function(spawn) {
         this.spawnName = spawn;
+        var tier = Memory.cmd.spawner['tier'];
         var b = false;
 
 
         if(this.spawnName == undefined) {return;}
-
-        if (Memory.cmd.spawner['stationary_active'] && !b) {b = this.missing_stationary_harvester();}
-        if(Memory.cmd.spawner['stationary_active'] && !b) {b = this.missing_dedicated_carrier();}
-        if(!Memory.cmd.spawner['stationary_active'] && !b) {b = this.missing_simple_harvester();}
-        if(!b) {b = this.missing_carriers();}
-        if(!b) {b = this.missing_upgrader();}
-        if(!b) {b = this.missing_builder();}
-        if(!b) {b = this.missing_militia();}
         
+        switch(tier) {
+            case 0:
+                if(!b) {b = this.missing_simple_harvester(tier);}
+                if(!b) {b = this.missing_upgrader(tier);}
+                if(!b) {b = this.missing_builder(tier);}
+                if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_militia(tier);}
+                break;
+            case 1:
+                if(!b) {b = this.missing_stationary_harvester(tier);}
+                if(!b) {b = this.missing_dedicated_carrier(tier);}
+                if(!b) {b = this.missing_upgrader(tier);}
+                if(!b) {b = this.missing_builder(tier);}
+                if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_militia(tier);}
+                break;
+            case 2:
+                if(!b) {b = this.missing_stationary_harvester(tier);}
+                if(!b) {b = this.missing_dedicated_carrier(tier);}
+                if(!b) {b = this.missing_upgrader(tier);}
+                if(!b) {b = this.missing_builder(tier);}
+                if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_militia(tier);}
+                break;
+        }
     },
 
     getName: function(role) {
@@ -33,7 +51,7 @@ var managerCreepSpawner = {
     },
 
     spawn: function(role, specification) {
-        var creepName = this.getName(role);
+        var creepName = this.getName(role.slice(0, -1));
         var reValue;
 
         /*
@@ -51,26 +69,56 @@ var managerCreepSpawner = {
         */
         
         switch(role) {
-            case 'simple_harvester': // COSTS = 300
+            case 'simple_harvester0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'simple_harvester', target: specification}});
                 break;
-            case 'sationary_harvester': // COSTS = 550
+            case 'sationary_harvester1': // COSTS = 550
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
                 break;
-            case 'dedicated_carrier': // COSTS = 350
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
+            case 'sationary_harvester2': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE], creepName, {memory: {role: 'sationary_harvester', target: specification}});
+                break;
+            case 'dedicated_carrier1': // COSTS = 500
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
+                break;
+            case 'dedicated_carrier2': // COSTS = 500
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'dedicated_carrier', target: specification}});
                 break;   
-            case 'carrier': // COSTS = 300
+            case 'carrier0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
                 break;
-            case 'upgrader': // COSTS = 300
+            case 'carrier1': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
+                break;
+            case 'carrier2': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
+                break;
+            case 'upgrader0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
                 break;
-            case 'builder': // COSTS = 300
+            case 'upgrader1': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
+                break;
+            case 'upgrader2': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
+                break;
+            case 'builder0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'builder'}});
                 break;
-            case 'militia': // COSTS = 260
-                reValue = Game.spawns[this.spawnName].spawnCreep([ATTACK, ATTACK, MOVE, MOVE], creepName, {memory: {role: 'militia', designatedRoom: specification}});
+            case 'builder1': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'builder'}});
+                break;
+            case 'builder2': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'builder'}});
+                break;
+            case 'militia0': // COSTS = 280/300
+                reValue = Game.spawns[this.spawnName].spawnCreep([ TOUGH, TOUGH, ATTACK, ATTACK, MOVE, MOVE], creepName, {memory: {role: 'militia', designatedRoom: specification}});
+                break;
+            case 'militia1': // COSTS = 380/550
+                reValue = Game.spawns[this.spawnName].spawnCreep([TOUGH, TOUGH, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE], creepName, {memory: {role: 'militia', designatedRoom: specification}});
+                break;
+            case 'militia2': // COSTS = 260
+                reValue = Game.spawns[this.spawnName].spawnCreep([TOUGH, TOUGH, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE], creepName, {memory: {role: 'militia', designatedRoom: specification}});
                 break;
             default:
                 reValue = 1;
@@ -115,7 +163,7 @@ var managerCreepSpawner = {
         }
     },
 
-    missing_stationary_harvester: function() {
+    missing_stationary_harvester: function(tier) {
         var sources = Game.spawns[this.spawnName].room.memory.sources;
 
         for(var sourceID in sources) {
@@ -124,14 +172,14 @@ var managerCreepSpawner = {
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'sationary_harvester' && c.memory.target == sourceID;}});
 
             if(creeps.length < 1) {
-                this.spawn('sationary_harvester', sourceID);
+                this.spawn('sationary_harvester'+tier, sourceID);
                 return true;
             }
         }
         return false;
     },
 
-    missing_dedicated_carrier: function() {
+    missing_dedicated_carrier: function(tier) {
         var sources = Game.spawns[this.spawnName].room.memory.sources;
 
         for(var sourceID in sources) {
@@ -140,35 +188,35 @@ var managerCreepSpawner = {
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'dedicated_carrier' && c.memory.target == sourceID;}});
 
             if(creeps.length < this.maxDCpS) {
-                this.spawn('dedicated_carrier', sourceID);
+                this.spawn('dedicated_carrier'+tier, sourceID);
                 return true;
             }
         }
         return false;
     },
 
-    missing_carriers: function() {
+    missing_carriers: function(tier) {
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'carrier';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['carrier']) {
-            this.spawn('carrier', undefined);
+            this.spawn('carrier'+tier, undefined);
             return true;
         }
         return false;
     },
 
-    missing_upgrader: function() {
+    missing_upgrader: function(tier) {
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'upgrader';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['upgrader']) {
-            this.spawn('upgrader', undefined);
+            this.spawn('upgrader'+tier, undefined);
             return true;
         }
         return false;
 
     },
 
-    missing_simple_harvester: function() {
+    missing_simple_harvester: function(tier) {
         var sources = Game.spawns[this.spawnName].room.memory.sources;
 
         for(var sourceID in sources) {
@@ -177,18 +225,18 @@ var managerCreepSpawner = {
             var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'simple_harvester' && c.memory.target == sourceID;}});
 
             if(creeps.length < (sources[sourceID])) {
-                this.spawn('simple_harvester', sourceID);
+                this.spawn('simple_harvester'+tier, sourceID);
                 return true;
             }
         }
         return false;
     },
 
-    missing_builder: function() {
+    missing_builder: function(tier) {
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'builder';}});
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['builder']) {
-            this.spawn('builder', undefined);
+            this.spawn('builder'+tier, undefined);
             return true;
         }
 
@@ -196,11 +244,11 @@ var managerCreepSpawner = {
 
     },
 
-    missing_militia: function() {
+    missing_militia: function(tier) {
         var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'militia';}});
             
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['militia']) {
-            this.spawn('militia', Game.spawns[this.spawnName].room.name);
+            this.spawn('militia'+tier, Game.spawns[this.spawnName].room.name);
             return true;
         }
 
