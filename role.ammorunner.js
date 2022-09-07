@@ -24,13 +24,26 @@ var roleAmmorunner = {
                     targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
                         return structure.structureType == STRUCTURE_WALL && (structure.hits < structure.hitsMax)}});
                 }
+                /*
 
                 var target;
-                /*
+    
                 for(var i=0.01; i<1; i+=0.01) {
+                    for(var t in targets) {
+                        if(t.hits < t.hitsMax * i) {
+                            target = t;
+                            i = 1.1;
+                            break;
+                        }
+                    }
+
+                    // TODO
+
                     
                 }
                 */
+
+    
             }
 
             var target = creep.pos.findClosestByRange(targets);

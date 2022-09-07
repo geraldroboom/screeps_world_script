@@ -99,11 +99,11 @@ var managerCreepSpawner = {
             case 'ammorunner0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
                 break;
-            case 'ammorunner1': // COSTS = 300
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
+            case 'ammorunner1': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
                 break;
-            case 'ammorunner2': // COSTS = 300
-                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
+            case 'ammorunner2': // COSTS = 550
+                reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
                 break;
             case 'upgrader0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});

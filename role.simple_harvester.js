@@ -24,6 +24,10 @@ var roleSimpleHarvester = {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
                     return structure.structureType == STRUCTURE_CONTAINER && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
             }
+            if(targets.length == 0) {
+                targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
+                    return structure.structureType == STRUCTURE_STORAGE && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
+            }
 
             var target = creep.pos.findClosestByRange(targets)
 
