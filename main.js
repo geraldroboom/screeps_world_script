@@ -36,6 +36,14 @@ module.exports.loop = function () {
         }
     }
 
+    /* Deletes Memory of dead Creeps */
+    // https://screeps.com/forum/topic/1862/small-snippet-to-clear-the-memory-of-dead-creeps
+    for(var i in Memory.creeps) {
+        if(!Game.creeps[i]) {
+            delete Memory.creeps[i];
+        }
+    }
+
     /* Cycling throug all creep-roles and performs their programms. */
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
