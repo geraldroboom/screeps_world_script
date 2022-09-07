@@ -2,8 +2,16 @@ var roleDedicatedCarrier = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+
+	    if(creep.memory.delivering && creep.store[RESOURCE_ENERGY] == 0) {
+            creep.memory.delivering = false;
+	    }
+	    if(!creep.memory.delivering && creep.store.getFreeCapacity() == 0) {
+	        creep.memory.delivering = true;
+	    }
+
         // If the hauler isn't full
-        if (creep.store.getFreeCapacity() > 0) {
+        if (creep.memory.delivering) {
             const droppedEnergy = creep.room.find(FIND_DROPPED_RESOURCES, {filter: (resource) => {
                 return resource.resourceType == RESOURCE_ENERGY && resource.pos.inRangeTo(creep.pos, 3);}});
             
