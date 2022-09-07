@@ -1,15 +1,16 @@
-var roleSimpleHarvester = require('role.simple_harvester');
-var roleStationaryHarvester = require('role.stationary_harvester');
-var roleDedicatedCarrier = require('role.dedicated_carrier');
-var roleCarrier = require('role.carrier');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleMilitia = require('role.militia');
+const roleSimpleHarvester = require('role.simple_harvester');
+const roleStationaryHarvester = require('role.stationary_harvester');
+const roleDedicatedCarrier = require('role.dedicated_carrier');
+const roleCarrier = require('role.carrier');
+const roleAmmorunner = require('./role.ammorunner');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const roleMilitia = require('role.militia');
 
-var analyserResources = require('analyser.resources');
+const analyserResources = require('analyser.resources');
 
-var managerCreepSpawner = require('manager.creep_spawner');
-var managerMemory = require('manager.memory');
+const managerCreepSpawner = require('manager.creep_spawner');
+const managerMemory = require('manager.memory');
 
 module.exports.loop = function () {
     // When executed the first time run memory manager
@@ -58,6 +59,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'carrier') {
             roleCarrier.run(creep);
+        }
+        if(creep.memory.role == 'ammorunner') {
+            roleAmmorunner.run(creep);
         }
         if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);

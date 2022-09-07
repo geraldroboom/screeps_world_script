@@ -42,6 +42,7 @@ var managerMemory = {
 
         Memory.rooms[roomName].maxCreeps = {}
         Memory.rooms[roomName].maxCreeps['carrier'] = 0;
+        Memory.rooms[roomName].maxCreeps['ammorunner'] = 0;
         Memory.rooms[roomName].maxCreeps['upgrader'] = 1;
         Memory.rooms[roomName].maxCreeps['builder'] = 1;
         Memory.rooms[roomName].maxCreeps['militia'] = 0;

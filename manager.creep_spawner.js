@@ -17,6 +17,7 @@ var managerCreepSpawner = {
                 if(!b) {b = this.missing_upgrader(tier);}
                 if(!b) {b = this.missing_builder(tier);}
                 if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_ammorunner(tier)};
                 if(!b) {b = this.missing_militia(tier);}
                 break;
             case 1:
@@ -25,6 +26,7 @@ var managerCreepSpawner = {
                 if(!b) {b = this.missing_upgrader(tier);}
                 if(!b) {b = this.missing_builder(tier);}
                 if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_ammorunner(tier)};
                 if(!b) {b = this.missing_militia(tier);}
                 break;
             case 2:
@@ -33,6 +35,7 @@ var managerCreepSpawner = {
                 if(!b) {b = this.missing_upgrader(tier);}
                 if(!b) {b = this.missing_builder(tier);}
                 if(!b) {b = this.missing_carriers(tier);}
+                if(!b) {b = this.missing_ammorunner(tier)};
                 if(!b) {b = this.missing_militia(tier);}
                 break;
         }
@@ -92,6 +95,15 @@ var managerCreepSpawner = {
                 break;
             case 'carrier2': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'carrier'}});
+                break;
+            case 'ammorunner0': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
+                break;
+            case 'ammorunner1': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
+                break;
+            case 'ammorunner2': // COSTS = 300
+                reValue = Game.spawns[this.spawnName].spawnCreep([CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], creepName, {memory: {role: 'ammorunner'}});
                 break;
             case 'upgrader0': // COSTS = 300
                 reValue = Game.spawns[this.spawnName].spawnCreep([WORK, CARRY, CARRY, MOVE, MOVE], creepName, {memory: {role: 'upgrader'}});
@@ -194,6 +206,16 @@ var managerCreepSpawner = {
 
         if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['carrier']) {
             this.spawn('carrier'+tier, undefined);
+            return true;
+        }
+        return false;
+    },
+
+    missing_ammorunner: function(tier) {
+        var creeps = Game.spawns[this.spawnName].room.find(FIND_MY_CREEPS, {filter: (c) => {return c.memory.role == 'ammorunner';}});
+
+        if(creeps.length < Game.spawns[this.spawnName].room.memory.maxCreeps['ammorunner']) {
+            this.spawn('ammorunner'+tier, undefined);
             return true;
         }
         return false;
