@@ -26,10 +26,11 @@ var roleAmmorunner = {
                 }
 
                 var target;
-
+                /*
                 for(var i=0.01; i<1; i+=0.01) {
                     
                 }
+                */
             }
 
             var target = creep.pos.findClosestByRange(targets);
