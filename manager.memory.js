@@ -32,6 +32,8 @@ var managerMemory = {
         
         Memory.rooms = {};
 
+        console.log('manager.memory>>: General memory initialized.');
+
     },
 
     // needs to run whenever a new room is colonized
@@ -50,6 +52,7 @@ var managerMemory = {
         Memory.rooms[roomName].sources = {};
         Memory.cmd.analyser['rooms'].push(roomName);
 
+        console.log('manager.memory>>: Memory for room ' + roomName + ' initialized.');
     }
 
 };

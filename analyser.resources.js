@@ -20,6 +20,8 @@ var analyserResources = {
 
             Game.rooms[roomName].memory.sources[sources[i].id] = counter;
         }
+        
+        console.log('analyser.resources>>: Resources for room ' + roomName + 'analysed.');  
     }
 
 };
