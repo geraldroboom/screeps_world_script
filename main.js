@@ -82,4 +82,5 @@ module.exports.loop = function () {
         var towers = Game.rooms[roomName].find(
             FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
         towers.forEach(tower => tower.attack(hostiles[0]));
+    }
 }
