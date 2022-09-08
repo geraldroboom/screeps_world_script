@@ -75,6 +75,7 @@ module.exports.loop = function () {
     }
 
     // Defence protocoll
+    var roomName = 'E25N59';
     var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
     if(hostiles.length > 0) {
         var username = hostiles[0].owner.username;
