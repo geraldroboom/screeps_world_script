@@ -27,16 +27,15 @@ var roleAmmorunner = {
 
                 var target = targets[0];
 
-                for(var t in targets) {
-                    if(t.hits <= target.hits) {
-                        target = t;
+                for(var i=1; i < targets.length; i++) {
+                    if(targets[i].hits <= target.hits) {
+                        target = targets[i];
                     }
                 }
     
                 if(creep.repair(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }    
-        
             }
         }
         else {
