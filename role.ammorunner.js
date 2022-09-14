@@ -14,12 +14,16 @@ var roleAmmorunner = {
             if(targets.length == 0) {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
                     return structure.structureType == STRUCTURE_TOWER && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
-            }
-            else {
-                if(targets.length == 0) {
-                    targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_RAMPART || structure.structureType == STRUCTURE_WALL) && (structure.hits < structure.hitsMax)}});
+
+                var target = creep.pos.findClosestByRange(targets);
+
+                if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
                 }
+            }
+            if(targets.length == 0) {
+                targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_RAMPART || structure.structureType == STRUCTURE_WALL) && (structure.hits < structure.hitsMax)}});
 
                 var target = targets[0];
 
@@ -28,11 +32,11 @@ var roleAmmorunner = {
                         target = t;
                     }
                 }
-
+    
                 if(creep.repair(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }    
-
+        
             }
 
             var target = creep.pos.findClosestByRange(targets);
