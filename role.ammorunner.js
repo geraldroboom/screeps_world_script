@@ -28,7 +28,7 @@ var roleAmmorunner = {
                 var target = targets[0];
 
                 for(var t in targets) {
-                    if(t.hits < target.hits) {
+                    if(t.hits <= target.hits) {
                         target = t;
                     }
                 }
@@ -69,7 +69,6 @@ var roleAmmorunner = {
             }
         }
     }
-
 };
 
 module.exports = roleAmmorunner;
