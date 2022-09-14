@@ -23,7 +23,7 @@ var roleAmmorunner = {
             }
             if(targets.length == 0) {
                 targets = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_RAMPART || structure.structureType == STRUCTURE_WALL) && (structure.hits < structure.hitsMax)}});
+                    return structure.structureType == STRUCTURE_RAMPART || structure.structureType == STRUCTURE_WALL}});
 
                 var target = targets[0];
 
