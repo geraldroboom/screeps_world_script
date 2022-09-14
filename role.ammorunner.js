@@ -38,12 +38,6 @@ var roleAmmorunner = {
                 }    
         
             }
-
-            var target = creep.pos.findClosestByRange(targets);
-
-            if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(target);
-            }
         }
         else {
             // find all containers and spawns with energy in them
